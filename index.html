@@ -1,1 +1,437 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#181713" />
+  <title>Ristorante Wilhelminenhof · Darmstadt</title>
+  <meta name="description" content="Ristorante Wilhelminenhof in Darmstadt – italienische Küche, frischer Fisch, saisonale Spezialitäten, ausgewählte Weine und eine große Sommerterrasse." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Italiana&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23181713%22/><text x=%2250%22 y=%2267%22 font-size=%2258%22 text-anchor=%22middle%22 fill=%22%23d9b56d%22 font-family=%22serif%22>W</text></svg>">
+  <style>
+    :root{
+      --ink:#181713;
+      --ink-soft:#2a2822;
+      --cream:#f5f0e7;
+      --paper:#fbf8f2;
+      --gold:#b58a45;
+      --gold-light:#d9b56d;
+      --olive:#5f674c;
+      --line:rgba(24,23,19,.14);
+      --white:#fff;
+      --shadow:0 24px 70px rgba(24,23,19,.12);
+      --radius:28px;
+    }
 
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:"DM Sans",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--ink);
+      background:var(--paper);
+      line-height:1.6;
+      overflow-x:hidden;
+    }
+    body.menu-open{overflow:hidden}
+    a{color:inherit;text-decoration:none}
+    img{display:block;width:100%;height:100%;object-fit:cover}
+    button{font:inherit}
+
+    .container{width:min(1180px,calc(100% - 40px));margin-inline:auto}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:10px;
+      font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+      color:var(--gold);
+    }
+    .eyebrow::before{content:"";width:34px;height:1px;background:currentColor}
+    h1,h2,h3,.brand{font-family:"Italiana",Georgia,serif;font-weight:400;letter-spacing:-.015em}
+    h2{font-size:clamp(2.7rem,5vw,5.2rem);line-height:.98}
+    .lead{font-size:clamp(1.05rem,1.5vw,1.25rem);color:#625e55;max-width:680px}
+
+    /* nav */
+    .nav-wrap{position:fixed;inset:18px 0 auto;z-index:100;padding:0 18px}
+    .nav{
+      width:min(1220px,100%);margin:auto;height:72px;padding:0 18px 0 24px;
+      display:flex;align-items:center;justify-content:space-between;
+      color:white;background:rgba(24,23,19,.62);backdrop-filter:blur(18px) saturate(130%);
+      -webkit-backdrop-filter:blur(18px) saturate(130%);
+      border:1px solid rgba(255,255,255,.14);border-radius:22px;
+      box-shadow:0 10px 35px rgba(0,0,0,.13);
+      transition:.35s ease;
+    }
+    .nav.scrolled{background:rgba(24,23,19,.92);inset:auto}
+    .brand{font-size:1.35rem;display:flex;align-items:center;gap:12px;white-space:nowrap}
+    .brand-mark{
+      width:34px;height:34px;border:1px solid rgba(217,181,109,.7);border-radius:50%;
+      display:grid;place-items:center;color:var(--gold-light);font-family:"Italiana",serif;font-size:1.1rem;
+    }
+    .nav-links{display:flex;align-items:center;gap:30px;font-size:.86rem;color:rgba(255,255,255,.82)}
+    .nav-links a{transition:.2s}.nav-links a:hover{color:white}
+    .nav-actions{display:flex;align-items:center;gap:10px}
+    .nav-cta{
+      padding:12px 18px;border-radius:14px;background:var(--cream);color:var(--ink);font-weight:600;font-size:.82rem;
+      transition:.25s ease;
+    }
+    .nav-cta:hover{transform:translateY(-1px);background:white}
+    .menu-btn{display:none;width:44px;height:44px;border:0;border-radius:12px;background:rgba(255,255,255,.1);color:white;cursor:pointer}
+
+    /* hero */
+    .hero{
+      min-height:100svh;position:relative;display:flex;align-items:flex-end;color:white;overflow:hidden;
+      background:
+        linear-gradient(90deg,rgba(11,11,9,.72) 0%,rgba(11,11,9,.36) 48%,rgba(11,11,9,.24) 100%),
+        linear-gradient(0deg,rgba(11,11,9,.42),transparent 55%),
+        url('https://www.wilhelminenhof.de/img/castello_6.jpg') center/cover no-repeat,
+        #2b2a24;
+    }
+    .hero::after{
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(circle at 72% 28%,rgba(217,181,109,.16),transparent 34%);
+    }
+    .hero-content{position:relative;z-index:2;padding:190px 0 80px;width:min(850px,100%)}
+    .hero .eyebrow{color:#f0d59d;margin-bottom:24px}
+    .hero h1{font-size:clamp(4.2rem,9vw,8.6rem);line-height:.83;max-width:900px}
+    .hero h1 em{display:block;color:#f3d7a1;font-style:italic;font-family:Georgia,serif;font-size:.58em;margin-top:18px;letter-spacing:-.03em}
+    .hero-copy{margin-top:32px;max-width:610px;font-size:1.1rem;color:rgba(255,255,255,.78)}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:15px;padding:15px 21px;font-size:.9rem;font-weight:600;
+      transition:transform .2s ease,background .2s ease,border-color .2s ease;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{background:var(--cream);color:var(--ink)}
+    .btn-ghost{border:1px solid rgba(255,255,255,.34);color:white;background:rgba(255,255,255,.07);backdrop-filter:blur(10px)}
+    .hero-meta{
+      position:absolute;right:40px;bottom:44px;z-index:2;display:grid;grid-template-columns:auto auto;gap:8px 28px;
+      font-size:.78rem;color:rgba(255,255,255,.72)
+    }
+    .hero-meta strong{color:white;font-weight:500}
+    .scroll-line{position:absolute;left:50%;bottom:0;width:1px;height:50px;background:rgba(255,255,255,.35);z-index:3;overflow:hidden}
+    .scroll-line::after{content:"";position:absolute;width:1px;height:20px;background:white;animation:scroll 1.8s infinite}
+    @keyframes scroll{0%{top:-20px}100%{top:50px}}
+
+    /* intro */
+    .intro{padding:120px 0 100px;background:var(--cream)}
+    .intro-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:90px;align-items:center}
+    .intro h2{margin:20px 0 28px}
+    .intro .lead{margin-bottom:34px}
+    .facts{display:flex;gap:36px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:28px}
+    .fact strong{font-family:"Italiana",serif;font-size:2rem;font-weight:400;display:block}
+    .fact span{color:#777167;font-size:.82rem}
+    .image-stack{position:relative;min-height:610px}
+    .image-main{position:absolute;inset:0 0 70px 90px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+    .image-main img{object-position:center}
+    .image-small{position:absolute;left:0;bottom:0;width:49%;height:310px;border:10px solid var(--cream);border-radius:24px;overflow:hidden;box-shadow:0 18px 45px rgba(24,23,19,.12)}
+    .image-caption{position:absolute;right:18px;bottom:22px;padding:14px 18px;background:rgba(251,248,242,.88);backdrop-filter:blur(14px);border-radius:15px;font-size:.78rem;color:#625e55}
+
+    /* experience */
+    .experience{padding:125px 0;background:var(--paper)}
+    .section-head{display:flex;justify-content:space-between;gap:40px;align-items:end;margin-bottom:56px}
+    .section-head h2{max-width:750px;margin-top:18px}
+    .section-head p{max-width:350px;color:#6d685f}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{position:relative;height:550px;border-radius:24px;overflow:hidden;background:#ddd;isolation:isolate}
+    .card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(13,13,11,.82) 0%,rgba(13,13,11,.04) 65%);z-index:1}
+    .card img{transition:transform .65s cubic-bezier(.2,.7,.2,1)}
+    .card:hover img{transform:scale(1.045)}
+    .card-content{position:absolute;z-index:2;left:28px;right:28px;bottom:28px;color:white}
+    .card-kicker{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:#f0d59d;margin-bottom:8px}
+    .card h3{font-size:2.2rem;margin-bottom:7px}
+    .card p{font-size:.9rem;color:rgba(255,255,255,.72)}
+
+    /* menu */
+    .menu-section{padding:120px 0;background:var(--ink);color:white;position:relative;overflow:hidden}
+    .menu-section::before{content:"";position:absolute;width:540px;height:540px;border:1px solid rgba(217,181,109,.13);border-radius:50%;right:-170px;top:-170px}
+    .menu-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:90px;position:relative;z-index:1}
+    .menu-sticky{position:sticky;top:120px;align-self:start}
+    .menu-section h2{margin:20px 0 24px}
+    .menu-section .lead{color:rgba(255,255,255,.62)}
+    .menu-note{margin-top:30px;font-size:.8rem;color:rgba(255,255,255,.48);max-width:390px}
+    .menu-list{border-top:1px solid rgba(255,255,255,.14)}
+    .menu-item{padding:27px 0;border-bottom:1px solid rgba(255,255,255,.14);display:grid;grid-template-columns:1fr auto;gap:25px;align-items:start}
+    .menu-item h3{font-family:"DM Sans",sans-serif;font-size:1.03rem;font-weight:500;letter-spacing:.01em}
+    .menu-item p{font-size:.82rem;color:rgba(255,255,255,.48);margin-top:5px}
+    .price{font-family:"Italiana",serif;font-size:1.4rem;color:#e3c78f;white-space:nowrap}
+    .menu-link{display:inline-flex;margin-top:28px;color:#f1d69f;align-items:center;gap:10px;font-size:.9rem;border-bottom:1px solid rgba(241,214,159,.35);padding-bottom:5px}
+
+    /* terrace */
+    .terrace{padding:120px 0;background:#dfe1d3}
+    .terrace-shell{display:grid;grid-template-columns:1.15fr .85fr;background:var(--paper);border-radius:30px;overflow:hidden;min-height:650px;box-shadow:var(--shadow)}
+    .terrace-photo{background:url('https://www.wilhelminenhof.de/img/castello_1.jpg') center/cover no-repeat;min-height:580px}
+    .terrace-copy{padding:70px 62px;display:flex;flex-direction:column;justify-content:center}
+    .terrace-copy h2{font-size:clamp(2.8rem,4vw,4.7rem);margin:18px 0 26px}
+    .terrace-copy p{color:#68635a;margin-bottom:28px}
+    .terrace-list{list-style:none;border-top:1px solid var(--line);margin-top:6px}
+    .terrace-list li{display:flex;justify-content:space-between;gap:20px;padding:16px 0;border-bottom:1px solid var(--line);font-size:.86rem}
+    .terrace-list span:last-child{color:#746e64;text-align:right}
+
+    /* reservation */
+    .reservation{padding:130px 0;background:var(--paper)}
+    .reservation-box{position:relative;overflow:hidden;border-radius:32px;background:var(--ink);color:white;padding:80px;display:grid;grid-template-columns:1fr .8fr;gap:70px;align-items:end}
+    .reservation-box::after{content:"W";position:absolute;right:-35px;top:-120px;font-family:"Italiana",serif;font-size:26rem;color:rgba(255,255,255,.025);line-height:1}
+    .reservation h2{font-size:clamp(3.2rem,6vw,6rem);position:relative;z-index:1;margin-top:17px}
+    .reservation-side{position:relative;z-index:1}
+    .reservation-side p{color:rgba(255,255,255,.62);margin-bottom:24px}
+    .phone{display:block;font-family:"Italiana",serif;font-size:clamp(2rem,4vw,3.4rem);color:#f1d69f;line-height:1.2;margin-bottom:8px}
+    .secondary-phone{font-size:.9rem;color:rgba(255,255,255,.58)}
+    .notice{margin-top:25px;padding-top:22px;border-top:1px solid rgba(255,255,255,.14);font-size:.78rem;color:rgba(255,255,255,.48)}
+
+    /* contact */
+    .contact{padding:110px 0 130px;background:var(--cream)}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px}
+    .contact h2{margin:18px 0 36px}
+    .contact-items{display:grid;gap:0;border-top:1px solid var(--line)}
+    .contact-row{display:grid;grid-template-columns:140px 1fr;padding:18px 0;border-bottom:1px solid var(--line);font-size:.9rem}
+    .contact-row span:first-child{color:#8c857a}
+    .hours{padding:35px;border:1px solid var(--line);border-radius:24px;background:rgba(255,255,255,.34)}
+    .hours h3{font-size:2rem;margin-bottom:20px}
+    .hour-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);font-size:.88rem}
+    .hour-row:last-child{border-bottom:0}
+    .closed{color:#9b4f45}
+
+    footer{background:#11110f;color:rgba(255,255,255,.6);padding:30px 0}
+    .footer-inner{display:flex;justify-content:space-between;align-items:center;gap:20px;font-size:.76rem}
+    .footer-links{display:flex;gap:22px}
+    .footer-links a:hover{color:white}
+
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+    .reveal.visible{opacity:1;transform:none}
+
+    @media (max-width:980px){
+      .nav-links{display:none}.menu-btn{display:grid;place-items:center}
+      .nav-actions .nav-cta{display:none}
+      .nav-links.open{
+        display:flex;position:fixed;inset:100px 18px auto;flex-direction:column;align-items:stretch;gap:4px;padding:18px;
+        background:rgba(24,23,19,.97);border:1px solid rgba(255,255,255,.12);border-radius:20px;box-shadow:var(--shadow)
+      }
+      .nav-links.open a{padding:14px 12px;border-bottom:1px solid rgba(255,255,255,.09)}
+      .nav-links.open a:last-child{border-bottom:0}
+      .hero-meta{display:none}
+      .intro-grid,.menu-grid,.contact-grid{grid-template-columns:1fr;gap:55px}
+      .image-stack{min-height:550px}
+      .cards{grid-template-columns:1fr 1fr}.card:last-child{grid-column:1/-1;height:450px}
+      .menu-sticky{position:static}
+      .terrace-shell{grid-template-columns:1fr}.terrace-photo{min-height:480px}.terrace-copy{padding:55px 38px}
+      .reservation-box{grid-template-columns:1fr;padding:60px 45px;gap:42px}
+    }
+    @media (max-width:640px){
+      .container{width:min(100% - 28px,1180px)}
+      .nav-wrap{inset:10px 0 auto;padding:0 10px}.nav{height:64px;border-radius:18px;padding:0 12px 0 16px}.brand{font-size:1.12rem}.brand-mark{width:30px;height:30px}
+      .hero{min-height:820px}.hero-content{padding:145px 0 75px}.hero h1{font-size:clamp(4rem,19vw,6.1rem)}.hero-copy{font-size:1rem}.hero-actions .btn{width:100%}
+      .intro,.experience,.menu-section,.terrace,.reservation,.contact{padding:88px 0}
+      .intro-grid{gap:45px}.facts{gap:24px}.image-stack{min-height:430px}.image-main{inset:0 0 60px 42px}.image-small{width:58%;height:230px;border-width:7px}.image-caption{display:none}
+      .section-head{display:block}.section-head p{margin-top:20px}
+      .cards{grid-template-columns:1fr}.card,.card:last-child{height:470px;grid-column:auto}
+      .menu-grid{gap:45px}.menu-item{padding:22px 0}.menu-item p{max-width:260px}
+      .terrace{padding-left:10px;padding-right:10px}.terrace-shell{border-radius:24px}.terrace-photo{min-height:390px}.terrace-copy{padding:45px 28px}
+      .reservation{padding-left:10px;padding-right:10px}.reservation-box{padding:50px 26px;border-radius:25px}.reservation-box::after{font-size:18rem}
+      .contact-row{grid-template-columns:100px 1fr}.hours{padding:25px}
+      .footer-inner{flex-direction:column;align-items:flex-start}.footer-links{flex-wrap:wrap}
+    }
+  </style>
+</head>
+<body>
+  <header class="nav-wrap">
+    <nav class="nav" id="nav">
+      <a href="#start" class="brand" aria-label="Zur Startseite">
+        <span class="brand-mark">W</span>
+        <span>Wilhelminenhof</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#restaurant">Restaurant</a>
+        <a href="#kueche">Küche</a>
+        <a href="#terrasse">Terrasse</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+      <div class="nav-actions">
+        <a class="nav-cta" href="tel:+49615123635">Tisch reservieren</a>
+        <button class="menu-btn" id="menuBtn" aria-label="Menü öffnen" aria-expanded="false">☰</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="start">
+      <div class="container">
+        <div class="hero-content">
+          <span class="eyebrow">Ristorante · Darmstadt</span>
+          <h1>Wilhelminenhof<em>La gioia di mangiare.</em></h1>
+          <p class="hero-copy">Italienische Gastfreundschaft, frischer Fisch, saisonale Spezialitäten und ausgewählte Weine – mitten in Darmstadt.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="tel:+49615123635">Jetzt reservieren <span>↗</span></a>
+            <a class="btn btn-ghost" href="#kueche">Unsere Küche <span>↓</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-meta">
+        <span>Adresse</span><strong>Wilhelminenstraße 50</strong>
+        <span>Heute</span><strong>11:30–14:30 · 17:30–22:00</strong>
+      </div>
+      <div class="scroll-line" aria-hidden="true"></div>
+    </section>
+
+    <section class="intro" id="restaurant">
+      <div class="container intro-grid">
+        <div class="reveal">
+          <span class="eyebrow">Benvenuti</span>
+          <h2>Ein Stück Italien in Darmstadt.</h2>
+          <p class="lead">Im Wilhelminenhof treffen klassische italienische Küche, saisonale Produkte und eine entspannte Atmosphäre aufeinander. Ein Ort für lange Abende, gutes Essen und den passenden Wein.</p>
+          <div class="facts">
+            <div class="fact"><strong>95</strong><span>Plätze im Restaurant</span></div>
+            <div class="fact"><strong>150</strong><span>Plätze auf der Terrasse</span></div>
+            <div class="fact"><strong>6×</strong><span>pro Woche geöffnet</span></div>
+          </div>
+        </div>
+        <div class="image-stack reveal">
+          <div class="image-main"><img src="https://www.wilhelminenhof.de/img/castello_5.jpg" alt="Sommerterrasse des Ristorante Wilhelminenhof"></div>
+          <div class="image-small"><img src="https://www.wilhelminenhof.de/img/castello_7.jpg" alt="Lounge auf der Terrasse"></div>
+          <div class="image-caption">Sommerabende, mediterranes Grün & viel Platz.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="experience" id="kueche">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <span class="eyebrow">La cucina</span>
+            <h2>Klassisch italienisch. Saisonal gedacht.</h2>
+          </div>
+          <p>Von Antipasti und hausgemachter Pasta über frischen Fisch bis zu ausgewählten Fleischgerichten.</p>
+        </div>
+        <div class="cards">
+          <article class="card reveal">
+            <img src="https://www.wilhelminenhof.de/img/fisch.jpg" alt="Fischgericht">
+            <div class="card-content"><div class="card-kicker">Dal mare</div><h3>Pesce</h3><p>Frischer Fisch und Meeresfrüchte – je nach Saison und Tagesangebot.</p></div>
+          </article>
+          <article class="card reveal">
+            <img src="https://www.wilhelminenhof.de/img/fleisch.jpg" alt="Fleischgericht">
+            <div class="card-content"><div class="card-kicker">Dalla terra</div><h3>Carne</h3><p>Kalb, Rind und saisonale Spezialitäten, klassisch und sorgfältig zubereitet.</p></div>
+          </article>
+          <article class="card reveal">
+            <img src="https://www.wilhelminenhof.de/img/wein.jpg" alt="Weißwein im Glas">
+            <div class="card-content"><div class="card-kicker">Dalla cantina</div><h3>Vino</h3><p>Italienische Weine, Sekt und Champagner – passend zu Ihrem Menü empfohlen.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="menu-section" aria-labelledby="menu-title">
+      <div class="container menu-grid">
+        <div class="menu-sticky reveal">
+          <span class="eyebrow">Aus der Karte</span>
+          <h2 id="menu-title">Una piccola selezione.</h2>
+          <p class="lead">Ein kleiner Einblick in die aktuelle Mitnahme-Speisekarte. Zusätzlich gibt es frische und saisonale Empfehlungen.</p>
+          <a class="menu-link" href="https://www.wilhelminenhof.de/mitnahme.pdf" target="_blank" rel="noopener">Gesamte Speisekarte öffnen ↗</a>
+          <p class="menu-note">Preise und Verfügbarkeit können sich ändern. Maßgeblich ist die aktuelle Karte des Restaurants.</p>
+        </div>
+        <div class="menu-list reveal">
+          <div class="menu-item"><div><h3>Antipasto Wilhelminenhof</h3><p>Vorspeise nach Art des Hauses</p></div><div class="price">22,00 €</div></div>
+          <div class="menu-item"><div><h3>Tortelloni al pomodoro e basilico</h3><p>Hausgemachte Teigtaschen · Tomatensauce · Basilikum</p></div><div class="price">16,50 €</div></div>
+          <div class="menu-item"><div><h3>Pizza con rucola, prosciutto di Parma e parmigiano</h3><p>Tomate · Käse · Rucola · Parmaschinken · Parmesan</p></div><div class="price">17,50 €</div></div>
+          <div class="menu-item"><div><h3>Filetto al pepe</h3><p>Pfeffersteak, flambiert</p></div><div class="price">42,00 €</div></div>
+          <div class="menu-item"><div><h3>Pesce misto griglia</h3><p>Gemischter Fisch vom Grill</p></div><div class="price">46,00 €</div></div>
+          <div class="menu-item"><div><h3>Tiramisù</h3><p>Italienische Süßspeise</p></div><div class="price">9,50 €</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="terrace" id="terrasse">
+      <div class="container">
+        <div class="terrace-shell reveal">
+          <div class="terrace-photo" role="img" aria-label="Terrasse des Wilhelminenhof"></div>
+          <div class="terrace-copy">
+            <span class="eyebrow">Estate a Darmstadt</span>
+            <h2>Die große Sommerterrasse.</h2>
+            <p>Mediterrane Bepflanzung, viel Platz und stimmungsvolle Abendbeleuchtung machen die Terrasse zum entspannten Rückzugsort mitten in der Stadt.</p>
+            <ul class="terrace-list">
+              <li><span>Sitzplätze draußen</span><span>bis zu 150</span></li>
+              <li><span>Kleinere Events</span><span>nach Absprache</span></li>
+              <li><span>Gesellschaften</span><span>bis ca. 24 Personen</span></li>
+              <li><span>Speisen außer Haus</span><span>grundsätzlich möglich</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="reservation" id="reservierung">
+      <div class="container">
+        <div class="reservation-box reveal">
+          <div>
+            <span class="eyebrow">Prenotazione</span>
+            <h2>Ein Tisch wartet auf Sie.</h2>
+          </div>
+          <div class="reservation-side">
+            <p>Reservierungen werden telefonisch entgegengenommen.</p>
+            <a class="phone" href="tel:+49615123635">06151 23635</a>
+            <a class="secondary-phone" href="tel:+496151293651">oder 06151 293651</a>
+            <div class="notice">Bitte beachten: Reservierungen werden nicht per E-Mail angenommen.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="kontakt">
+      <div class="container contact-grid">
+        <div class="reveal">
+          <span class="eyebrow">Ci vediamo</span>
+          <h2>Besuchen Sie uns.</h2>
+          <div class="contact-items">
+            <div class="contact-row"><span>Adresse</span><a href="https://www.google.com/maps/search/?api=1&query=Wilhelminenstraße+50+64285+Darmstadt" target="_blank" rel="noopener">Wilhelminenstraße 50<br>64285 Darmstadt ↗</a></div>
+            <div class="contact-row"><span>Telefon</span><a href="tel:+49615123635">06151 23635</a></div>
+            <div class="contact-row"><span>E-Mail</span><a href="mailto:info@wilhelminenhof.de">info@wilhelminenhof.de</a></div>
+          </div>
+        </div>
+        <div class="hours reveal">
+          <h3>Öffnungszeiten</h3>
+          <div class="hour-row"><span>Dienstag – Sonntag</span><span>11:30 – 14:30</span></div>
+          <div class="hour-row"><span>&nbsp;</span><span>17:30 – 22:00</span></div>
+          <div class="hour-row"><span>Montag</span><span class="closed">Ruhetag</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> Ristorante Wilhelminenhof · Darmstadt</span>
+      <div class="footer-links">
+        <a href="https://www.wilhelminenhof.de/impressum.php" target="_blank" rel="noopener">Impressum</a>
+        <a href="https://www.wilhelminenhof.de/datenschutz.php" target="_blank" rel="noopener">Datenschutz</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 30));
+
+    menuBtn.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      document.body.classList.toggle('menu-open', open);
+      menuBtn.setAttribute('aria-expanded', open);
+      menuBtn.textContent = open ? '×' : '☰';
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      document.body.classList.remove('menu-open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.textContent = '☰';
+    }));
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
