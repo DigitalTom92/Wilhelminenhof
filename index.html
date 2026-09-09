@@ -191,7 +191,7 @@
   </style>
 </head>
 <body>
-  <header class="nav-wrap" id="navWrap">
+  <header class="nav-wrap scrolled" id="navWrap">
     <nav class="nav container">
       <a href="#start" class="brand" aria-label="Zur Startseite">Wilhelminenhof</a>
       <div class="nav-links" id="navLinks">
@@ -365,9 +365,6 @@
     const menuBtn = document.getElementById('menuBtn');
     const navLinks = document.getElementById('navLinks');
 
-    const syncNav = () => navWrap.classList.toggle('scrolled', window.scrollY > 40);
-    syncNav();
-    window.addEventListener('scroll', syncNav, { passive:true });
 
     menuBtn.addEventListener('click', () => {
       const open = navLinks.classList.toggle('open');
